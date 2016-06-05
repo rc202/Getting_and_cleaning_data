@@ -1,5 +1,5 @@
 # Week 4 Assignment Code Book for Human Activity Recognition Using Smartphones Dataset
-## Ramatoulie Camara 
+## R_Camara 
 
 ## Input Dataset Description
 
@@ -17,13 +17,13 @@ The sensor signals (accelerometer and gyroscope) were pre-processed by applying 
 
 ### Output Tidy Data Set Description
 
-* Subject - 1-30 depending on who the participent was
+* Subject - 1-30 depending on who the participant was
 * Activity - WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING
 * Variable - Name of the input variable for the subject
 * Mean - Average of all the input variables for that Subject and Activity
 
 
-##Packages used in run_analysis.r
+##Packages used in run_analysis.R
 
 library('reshape2')
 
@@ -35,55 +35,55 @@ library('sqldf')
 
 ### Source Data 
 
-Downloads either the following file https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip or uses an exsisting downloaded dataset. 
+Downloads either the following file https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip or uses an existing downloaded dataset. 
  
 ## Steps 
-* Loads the datasets & labels
+* Loads the datasets & labels.
 * Merges the training and the test sets to create one data set.
 * Extracts only the measurements on the mean and standard deviation for each measurement.
-* Uses descriptive activity names to name the activities in the data set
+* Uses descriptive activity names to name the activities in the data set.
 * Appropriately labels the data set with descriptive variable names.
-* From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+* From the data set in step 4, creates a second independent tidy data set with the average of each variable for each activity and each subject.
 
-### Loads the datasets 
+### Loading the datasets 
 
-Gets the datasets then rbinds them to create merged test & training datasets, unloads the old datasets from memory and retain only the merged datasets
+Gets the datasets then rbinds them to create merged test & training data sets, unloads the old datasets from memory and retain only the merged datasets.
 
-### 1. Merges the training and the test sets to create one data set.
+### 1. Mergeing the training and the test sets to create one data set
 
-Names the subject and the activity datasets to have the right headings
+Names the subject and the activity data sets to have the right headings.
 
 names(data.Subject) <- c("subject")
 names(data.Activity) <- c("activity")
 
-Removes the punctuation in the column names and formats Mean & Std them before relabeling the columns in the dataset
+Removes the punctuation in the column names and formats Mean & Std before relabelling the columns in the data set.
 
-Apply the names to the columns of the data.features dataset, then cbind the subject and activity columns
+Apply the names to the columns of the data.features data set, then cbind the subject and activity columns.
 
-Resulting dataset should contain 10299 obs of 563 variables this is too many for the project scope
+Resulting dataset should contain 10299 observations with 563 variables.
 
-### 2. Extract only the measurements for mean and std deviation and subset the data
+### 2. Extracting only the measurements for mean and std and subset the data
 
-sub.data.Features.Names<-data.Features.Names$V2[grep("Mean|Std", data.Features.Names$V2)]
+Use grep to subset list of selected names
 
 selected.Names <- c(as.character(sub.data.Features.Names), "subject", "activity")
 Data <- subset( Data, select=selected.Names)
 
-Data should now only contain 10299 obs of 81 variables only means and std
+Data should now only contain 10299 observations of 81 variables with only means and std
 
-### 3. Uses descriptive activity names to name the activities in the data set
+### 3. Using descriptive activity names to name the activities in the data set
 
-Load the Activity labels and use the sqldf package to join the names on the numeric identifier into the dataset and then use NULL assignment to remove redundant columns.
+Loads the Activity labels and use the sqldf package to join the names on the numeric identifier into the dataset and then uses NULL assignment to remove redundant columns.
 
-### 4. Appropriately labels the data set with descriptive variable names.
+### 4. Appropriately labelling the data set with descriptive variable names
 
-Rename the columns for Activity and Subject to be consistant, Rename the columns for the variables to have more descriptive names better for melted dataset used later.
+Renames the columns for Activity and Subject to be consistent, Renames the columns for the variables to have more descriptive names which is better for melted data set used later.
 
-###  5. Tidy Dataset
+### 5. Tidying the data set
 
-From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+From the data set in step 4, creates a second independent tidy data set with the average of each variable for each activity and each subject.
 
-Use the aggrigate function to create a mean for each of the measurments, then melt the dataset to be more usable turning each measurement into a variable.
+Uses the aggregate function to create a mean for each of the measurements, then melts the data set to be more usable turning each measurement into a variable.
 
 
 
